@@ -15,8 +15,13 @@ export class FavoriteService {
     });
   }
 
-  findAll() {
-    return this.prisma.favoriteCook.findMany();
+  async findAll() {
+    const test = (await this.prisma.favoriteCook.findMany()).map((cook) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { userId, ...registered } = cook;
+      return registered;
+    });
+    return test;
   }
 
   findOne(userID: string) {
